@@ -5,6 +5,7 @@ var json = {
                 datasets: [{
                     data: [0, 0, 0, 0 , 0],
                     borderWidth: 2,
+                    borderColor: 'rgba(0,0,255,0.4)',
                     strokeColor: 'rgba(0,0,255,1)',
                     backgroundColor: 'rgba(0,191,255,0.5)',
                     fill: false
@@ -14,7 +15,12 @@ var json = {
                 scales: {
                     xAxes: [{
                         ticks: {
-                            beginAtZero:true
+                            beginAtZero: true,
+                            userCallback: function (label, index, labels) {
+                                if (Math.floor(label) == label) {
+                                    return label;
+                                }
+                            }
                         },
                         scaleLabel: {
                             display: true,
@@ -33,7 +39,12 @@ var json = {
                         }
                     }]
                 },
-                responsive: true
+                responsive: true,
+                elements: {
+                    point: {
+                        radius: 1
+                    }
+                }
             }
         }
         

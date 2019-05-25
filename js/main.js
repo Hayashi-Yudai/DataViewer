@@ -1,8 +1,8 @@
 var upload = document.getElementById("draw-graph");
-var x = [];
-var y = [];
 
 upload.addEventListener("click", function() {
+  var x = [];
+  var y = [];
   var data = document.getElementById("upload-file");
   var data_content = data.files[0];
 
@@ -18,10 +18,8 @@ upload.addEventListener("click", function() {
 
     json["data"]["labels"] = x;
     json["data"]["datasets"][0]["data"] = y;
-  }
+    }
 
-  //console.log(x);
-  //console.log(y);
+    draw_graph();
   }
-
 });
