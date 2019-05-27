@@ -14,11 +14,13 @@ var fft_json = {
     ]
   },
   options: {
+    legend: { display: false },
     scales: {
       xAxes: [
         {
           ticks: {
-            beginAtZero: true
+            beginAtZero: true,
+            maxTicksLimit: 5
           },
           scaleLabel: {
             display: true,

@@ -35,14 +35,24 @@ upload.addEventListener("click", function() {
     }
 
     var delta_time = (6.0e-6 * 2) / 3.0e8;
-    var sample_freq = 1 / delta_time / 4096;
+    var sample_freq = 1 / delta_time;
 
     var phasors = fft(padding_y);
-    var frequency = fftUtil.fftFreq(phasors, 4096),
+    var frequency = fftUtil.fftFreq(phasors, sample_freq),
       magnitude = fftUtil.fftMag(phasors);
 
-    fft_json["data"]["labels"] = frequency;
-    fft_json["data"]["datasets"][0]["data"] = magnitude;
+    var upper_limit = 0;
+    for (var i = 0; i < frequency.length; i++) {
+      frequency[i] *= 1e-12;
+      if (frequency[i] > 2.5) {
+        break;
+      }
+
+      upper_limit++;
+    }
+
+    fft_json["data"]["labels"] = frequency.slice(0, upper_limit);
+    fft_json["data"]["datasets"][0]["data"] = magnitude.slice(0, upper_limit);
 
     draw_graph("data-row", json);
     draw_graph("data-ana", fft_json);
