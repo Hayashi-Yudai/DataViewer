@@ -4,7 +4,11 @@ const BrowserWindow = electron.BrowserWindow;
 
 let mainWindow = null;
 app.on("ready", () => {
-  mainWindow = new BrowserWindow({ width: 1000, height: 700 });
+  mainWindow = new BrowserWindow({
+    width: 1000,
+    height: 700,
+    webPreferences: { nodeIntegration: true }
+  });
   mainWindow.loadURL("file://" + __dirname + "/index.html");
 
   mainWindow.on("closed", function() {
