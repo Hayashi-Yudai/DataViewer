@@ -14,6 +14,7 @@ var fft_json = {
     ]
   },
   options: {
+    animation: false,
     legend: { display: false },
     scales: {
       xAxes: [
@@ -33,7 +34,9 @@ var fft_json = {
         {
           type: "logarithmic",
           ticks: {
-            beginAtZero: false
+            beginAtZero: false,
+            min: 1,
+            max: 100
           },
           scaleLabel: {
             display: true,
