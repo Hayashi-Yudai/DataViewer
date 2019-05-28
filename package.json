@@ -9,6 +9,7 @@
   "author": "Yudai Hayashi",
   "license": "MIT",
   "dependencies": {
+    "chart.js": "^2.1.4",
     "fft-js": "0.0.12"
   }
 }
