@@ -6,7 +6,7 @@ let mainWindow = null;
 app.on("ready", () => {
   mainWindow = new BrowserWindow({
     width: 1000,
-    height: 700,
+    height: 750,
     webPreferences: { nodeIntegration: true }
   });
   mainWindow.loadURL("file://" + __dirname + "/index.html");
