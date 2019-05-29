@@ -14,7 +14,6 @@ var json = {
     ]
   },
   options: {
-    animation: false,
     legend: { display: false },
     scales: {
       xAxes: [

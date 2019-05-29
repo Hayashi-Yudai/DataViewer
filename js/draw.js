@@ -1,9 +1,11 @@
 var Chart = require("chart.js");
 
-function draw_graph(cvs, data) {
-  var ctx = document.getElementById(cvs).getContext("2d");
-  ctx.canvas.width = 400;
-  ctx.canvas.height = 400;
+var ctx = document.getElementById("data-row").getContext("2d");
+ctx.canvas.width = 400;
+ctx.canvas.height = 400;
+var row_data_chart = new Chart(ctx, json);
 
-  var myChart = new Chart(ctx, data);
-}
+var ctx = document.getElementById("data-ana").getContext("2d");
+ctx.canvas.width = 400;
+ctx.canvas.height = 400;
+var fft_data_chart = new Chart(ctx, fft_json);
