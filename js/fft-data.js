@@ -14,7 +14,6 @@ var fft_json = {
     ]
   },
   options: {
-    animation: false,
     legend: { display: false },
     scales: {
       xAxes: [

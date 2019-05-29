@@ -72,6 +72,6 @@ function analyze_data(x, y, cut_size = 0) {
   fft_json["data"]["labels"] = frequency.slice(0, upper_limit);
   fft_json["data"]["datasets"][0]["data"] = magnitude.slice(0, upper_limit);
 
-  draw_graph("data-row", json);
-  draw_graph("data-ana", fft_json);
+  row_data_chart.update({duration:0});
+  fft_data_chart.update({duration:0});
 }
