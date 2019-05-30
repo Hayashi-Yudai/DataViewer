@@ -42,12 +42,12 @@ $(function() {
     max: 0,
     slide: function(event, ui) {
       $("#slidervalue").html("value:" + ui.value);
-      analyze_data(x, y, -ui.value);
+      analyze_data(x, y, -ui.value, true);
     }
   });
 });
 
-function analyze_data(x, y, cut_size = 0) {
+function analyze_data(x, y, cut_size = 0, sliding=false) {
   json["data"]["labels"] = x.slice(0, x.length - cut_size);
   json["data"]["datasets"][0]["data"] = y.slice(0, y.length - cut_size);
 
@@ -80,8 +80,24 @@ function analyze_data(x, y, cut_size = 0) {
     upper_limit++;
   }
 
-  fft_json["data"]["labels"] = frequency.slice(0, upper_limit);
-  fft_json["data"]["datasets"][0]["data"] = magnitude.slice(0, upper_limit);
+  frequency = frequency.slice(0, upper_limit);
+  magnitude = magnitude.slice(0, upper_limit);
+
+  fft_json["data"]["labels"] = frequency;
+  fft_json["data"]["datasets"][0]["data"] = magnitude;
+  if (!sliding) {
+    var Max_intensity = Math.max.apply(null, magnitude);
+    var Min_intensity = Math.min.apply(null, magnitude);
+
+    var Max_order = Math.floor(Math.log10(Max_intensity));
+    var Min_order = Math.floor(Math.log10(Min_intensity));
+
+    var Max_value = Math.ceil(Max_intensity / Math.pow(10, Max_order)) * Math.pow(10, Max_order);
+    var Min_value =(Math.floor(Min_intensity / Math.pow(10, Min_order))) * Math.pow(10, Min_order);
+    console.log(Math.ceil(Max_intensity / Math.pow(10, Max_order)));
+    fft_json['options']['scales']['yAxes'][0]['ticks']['max'] = Max_value;
+    fft_json['options']['scales']['yAxes'][0]['ticks']['min'] = Min_value;
+  }
 
   row_data_chart.update({duration:0});
   fft_data_chart.update({duration:0});
