@@ -3,13 +3,13 @@ var fftUtil = require("fft-js").util;
 var Chart = require("chart.js");
 
 var ctx = document.getElementById("data-row").getContext("2d");
-ctx.canvas.width = 400;
-ctx.canvas.height = 400;
+ctx.canvas.width = 350;
+ctx.canvas.height = 300;
 var row_data_chart = new Chart(ctx, json);
 
 var ctx = document.getElementById("data-ana").getContext("2d");
-ctx.canvas.width = 400;
-ctx.canvas.height = 400;
+ctx.canvas.width = 350;
+ctx.canvas.height = 300;
 var fft_data_chart = new Chart(ctx, fft_json);
 
 var upload = document.getElementById("draw-graph");

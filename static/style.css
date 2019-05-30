@@ -3,14 +3,23 @@ body {
 }
 h1 {
   margin-top: 10px;
-  margin-bottom: 20px;
+  margin-bottom: 50px;
 }
 .graphs {
   float: left;
+  margin-right: 5px;
+  margin-left: 5px;
+}
+
+#side_menu{
+  float: left;
+}
+#main{
+  float: right;
 }
 
 .container {
-  max-width: 90%;
+  max-width: 95%;
 }
 
 input[type="range"] {
