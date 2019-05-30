@@ -7,41 +7,45 @@
     <link rel="stylesheet" href="static/jquery-ui.css">
     <link href="static/bootstrap.min.css" rel="stylesheet" />
     <script type="text/javascript" src="js/data.js" async></script>
+    <script type="text/javascript" src="js/main.js" async></script>
     <title>Graph Viewer</title>
     <link rel="stylesheet" href="static/style.css" />
   </head>
   <body>
     <div class="container">
-      <div class="col-md-12">
+      <div class="row">
         <h1>Graph Viewer</h1>
       </div>
-      <div class="col-md-12 mb-5">
+      <div class="col-md-2" id="side_menu">
         <label>
-          <span class="btn btn-primary" id="upload">
-            Choose File
-            <input type="file" id="upload-file" style="display: none" />
+          <span class="btn btn-outline-primary btn-block" id="upload">
+            Choose Folder
+            <input type="file" id="choose-folder" style="display: none" webkitdirectory />
           </span>
         </label>
-        <input
-          type="submit"
-          class="btn btn-primary"
-          id="draw-graph"
-          value="Draw"
-        />
-        <script type="text/javascript" src="js/main.js" async></script>
+        <div class="menu">
+          <ul id="list" style="list-style: none;">
+          </ul>
+        </div>
       </div>
-      <div class="col-md-6 graphs">
-        <h3>Row Data</h3>
-        <canvas id="data-row"> </canvas>
-      </div>
-      <div class="col-md-6 graphs">
-        <h3>Analyzed Data</h3>
-        <canvas id="data-ana"> </canvas>
-      </div>
-      <div class="slider-wrapper col-md-6">
-        <div>cut data point from right:</div>
-        <div id="slider"></div>
-        <div id="slidervalue"></div>
+      <div class="col-md-10" id="main">
+        <div class="col-md-10 mb-5">
+        </div>
+        <div class="col-md-12">
+          <div class="graphs">
+            <h3>Row Data</h3>
+            <canvas id="data-row"> </canvas>
+          </div>
+          <div class="graphs">
+            <h3>Analyzed Data</h3>
+            <canvas id="data-ana"> </canvas>
+          </div>
+        </div>
+        <div class="slider-wrapper col-md-5">
+          <div>cut data point from right:</div>
+          <div id="slider"></div>
+          <div id="slidervalue"></div>
+        </div>
       </div>
     </div>
   </body>

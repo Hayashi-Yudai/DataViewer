@@ -1,40 +1,21 @@
 var fft = require("fft-js").fft;
 var fftUtil = require("fft-js").util;
 var Chart = require("chart.js");
+const fs = require('fs');
 
 var ctx = document.getElementById("data-row").getContext("2d");
-ctx.canvas.width = 400;
-ctx.canvas.height = 400;
+ctx.canvas.width = 350;
+ctx.canvas.height = 300;
 var row_data_chart = new Chart(ctx, json);
 
 var ctx = document.getElementById("data-ana").getContext("2d");
-ctx.canvas.width = 400;
-ctx.canvas.height = 400;
+ctx.canvas.width = 350;
+ctx.canvas.height = 300;
 var fft_data_chart = new Chart(ctx, fft_json);
 
-var upload = document.getElementById("draw-graph");
 var x = [];
 var y = [];
-
-upload.addEventListener("click", function() {
-  var data = document.getElementById("upload-file");
-  var data_content = data.files[0];
-
-  var reader = new FileReader();
-  reader.readAsText(data_content);
-  reader.onload = function() {
-    x = [];
-    y = [];
-    var value = reader.result;
-    var word_list = value.split("\n");
-    for (var i = 0; i < word_list.length - 1; i++) {
-      var pair = word_list[i].split("\t");
-      x.push(parseFloat(pair[0]) / 1000);
-      y.push(parseFloat(pair[1]) * 1000);
-    }
-    analyze_data(x, y);
-  };
-});
+var absPath;
 
 $(function() {
   $("#slider").slider({
@@ -94,7 +75,6 @@ function analyze_data(x, y, cut_size = 0, sliding=false) {
 
     var Max_value = Math.ceil(Max_intensity / Math.pow(10, Max_order)) * Math.pow(10, Max_order);
     var Min_value =(Math.floor(Min_intensity / Math.pow(10, Min_order))) * Math.pow(10, Min_order);
-    console.log(Math.ceil(Max_intensity / Math.pow(10, Max_order)));
     fft_json['options']['scales']['yAxes'][0]['ticks']['max'] = Max_value;
     fft_json['options']['scales']['yAxes'][0]['ticks']['min'] = Min_value;
   }
@@ -102,3 +82,49 @@ function analyze_data(x, y, cut_size = 0, sliding=false) {
   row_data_chart.update({duration:0});
   fft_data_chart.update({duration:0});
 }
+
+document.getElementById("choose-folder").addEventListener("change", ev => {
+  let file = ev.target.files[0];
+  absPath = file.path;
+  let filenames = fs.readdirSync(absPath);
+  let table = document.getElementById("list");
+  for (let i = 0; i < filenames.length; i++)
+  {
+    let p = absPath + "\\" + filenames[i]
+    let path = fs.statSync(p);
+    if(!path.isDirectory())
+    {
+      let str = filenames[i];
+      if (str.indexOf('csv') == -1 && str.indexOf('pxp') == -1
+      && str.indexOf('ipynb') == -1)
+      {
+        let f = "<li>" + filenames[i] + "</li>";
+        table.insertAdjacentHTML("beforeend", f);
+      }
+    }
+  }
+});
+
+$(document).on('click', '#list li', function () {
+  let text = $(this).text();
+  let path_to_datafile = absPath + "\\" + text;
+  const xhr = new XMLHttpRequest();
+  var data;
+
+  xhr.open('GET', path_to_datafile, true);
+  xhr.onreadystatechange = function () {
+    if (xhr.readyState === 4) {
+      data = xhr.responseText;
+      x = [];
+      y = [];
+      var word_list = data.split("\n");
+      for (var i = 0; i < word_list.length - 1; i++) {
+        var pair = word_list[i].split("\t");
+        x.push(parseFloat(pair[0]) / 1000);
+        y.push(parseFloat(pair[1]) * 1000);
+      }
+      analyze_data(x, y);
+    }
+  };
+  xhr.send();
+});
