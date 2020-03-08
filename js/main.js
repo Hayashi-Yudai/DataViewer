@@ -2,6 +2,7 @@ var fft = require("fft-js").fft;
 var fftUtil = require("fft-js").util;
 var Chart = require("chart.js");
 const fs = require('fs');
+const Path = require('path');
 
 var ctx = document.getElementById("data-row").getContext("2d");
 ctx.canvas.width = 350;
@@ -90,7 +91,7 @@ document.getElementById("choose-folder").addEventListener("change", ev => {
   let table = document.getElementById("list");
   for (let i = 0; i < filenames.length; i++)
   {
-    let p = absPath + "\\" + filenames[i]
+    let p = Path.join(absPath, filenames[i]);
     let path = fs.statSync(p);
     if(!path.isDirectory())
     {
@@ -98,7 +99,7 @@ document.getElementById("choose-folder").addEventListener("change", ev => {
       if (str.indexOf('csv') == -1 && str.indexOf('pxp') == -1
       && str.indexOf('ipynb') == -1)
       {
-        let f = "<li>" + filenames[i] + "</li>";
+        let f = "<li>" + str + "</li>";
         table.insertAdjacentHTML("beforeend", f);
       }
     }
