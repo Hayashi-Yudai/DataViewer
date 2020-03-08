@@ -7,5 +7,7 @@
 
 ## How to start the app
 ```bash
+npm install --save chartjs
+npm install --save fftjs
 electron .
 ```
